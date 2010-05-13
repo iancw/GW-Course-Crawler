@@ -23,13 +23,22 @@ class Course
 	puts "creds-"+@credits
     @desc = paras[2].inner_text
 	puts "desc-"+@desc
-     parsePrereqs.each do |pre|
-       @prereqs << pre
-     end
+     parsePrereqs
   end
 
   def parsePrereqs
-    @desc.match(/Prerequisite:.*\z/).to_s.split(/,/)
+    preexp='([pP]re)?req[a-z]*es?:'
+    midexp='[^.?!\n]*'
+    postexp='[.?!\n]'
+    matches=@desc.match(preexp+midexp+postexp)
+#/([pP]re)?req[a-z]*es?:[^.?!\n]*[.?!\n][.?!\n]/)
+    if matches.nil? then
+      puts "Found no prereqs."
+   else
+    allPres=matches.to_s.strip.gsub(/([pP]re)?req[a-z]*es?:/, "").gsub(/[.?!\n]/, "")
+    #some prerequisite strings contain descriptions, others contain actual courses
+    #we want to leave the strings intact, but parse out and link the actual courses
+   end
   end
 
   def to_s
