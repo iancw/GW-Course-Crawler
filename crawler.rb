@@ -36,6 +36,7 @@ class Course
       puts "Found no prereqs."
    else
     allPres=matches.to_s.strip.gsub(/([pP]re)?req[a-z]*es?:/, "").gsub(/[.?!\n]/, "")
+	puts "parsed prereqs-"+allPres
     #some prerequisite strings contain descriptions, others contain actual courses
     #we want to leave the strings intact, but parse out and link the actual courses
    end
